@@ -12,7 +12,7 @@
       lib.allUnique
       (builtins.map (lib.getAttr name) (lib.collect (x: x ? ${name}) attrSet))
     );
-  duplicateErrorMessage = name: builtins.throw "Detected duplicate values for ${name} in config.mc-servers. Ensure port types are unique across servers!";
+  duplicateErrorMessage = name: "Detected duplicate values for ${name} in config.mc-servers. Ensure port types are unique across servers!";
 
   buildBoreService = lib.mapAttrs' (name: value: {
     name = "minecraft-server-${name}-bore";
@@ -50,10 +50,13 @@ in {
     };
   };
 
-  config =
-    if containsDuplicateAttrValue cfg.servers "rcon-port"
-    then duplicateErrorMessage
-    else {
-      systemd.services = buildBoreService cfg.servers;
-    };
+  config = {
+    assertions = [
+      {
+        assertion = containsDuplicateAttrValue cfg.servers "rcon-port";
+        message = duplicateErrorMessage "rcon-port";
+      }
+    ];
+    systemd.services = buildBoreService cfg.servers;
+  };
 }
