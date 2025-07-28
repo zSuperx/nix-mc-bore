@@ -35,11 +35,21 @@
   });
 in {
   options = {
-    # Extend services.minecraft-servers.servers options
-    services.minecraft-servers.servers = mkOption {
-      type = types.attrsOf (types.submodule {
-        imports = [./options.nix];
-      });
+    services.minecraft-servers = {
+      # Extend services.minecraft-servers.servers options
+      servers = mkOption {
+        type = types.attrsOf (types.submodule {
+          imports = [./options.nix];
+        });
+      };
+
+      allowDuplicatePorts = mkOption {
+        type = types.bool;
+        default = false;
+        description = ''
+          Set to true to remove the assertions on duplicate ports across servers.
+        '';
+      };
     };
   };
 
@@ -49,7 +59,11 @@ in {
         assertion =
           lib.allUnique
           (builtins.map (lib.getAttr port) (builtins.attrValues cfg.servers));
-        message = "Detected duplicate values for ${port} in config.mc-servers. Ensure port types are unique across servers!";
+        message = ''
+          Detected duplicate values for ${port} in config.mc-servers.
+          Ensure port types are unique across servers! To turn off this assertion,
+          set `services.minecraft-servers.allowDuplicatePorts = true;`.
+        '';
       }
     ) ["rcon-port" "local-port" "proxy-port"];
     systemd.services = buildBoreService cfg.servers;
