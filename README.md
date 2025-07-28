@@ -26,22 +26,41 @@ First add it to your flake inputs:
 
 Then in your `configuration.nix` or adjacent, add the usual imports for `nix-minecraft`,
 along with `nix-mc-bore`. Then you can configure servers to automatically start a
-systemd service for a `bore local` script alongside the minecraft server.
+systemd service for `bore local` alongside the minecraft server.
 
 ```nix
 { 
-    inputs,
-    pkgs,
-    ...
+  inputs,
+  pkgs,
+  ...
 }:
 {
-    imports = [
-        inputs.nix-minecraft.nixosModules.minecraft-servers
-        inputs.nix-mc-bore.nixosModules.minecraft-servers
-    ];
+  imports = [
+    inputs.nix-minecraft.nixosModules.minecraft-servers
+    inputs.nix-mc-bore.nixosModules.minecraft-servers
+  ];
 
-    nixpkgs.overlays = [ inputs.nix-minecraft.overlay ];
+  nixpkgs.overlays = [ inputs.nix-minecraft.overlay ];
 
-    services.minecraft-servers
+  services.minecraft-servers = {
+    enable = true;
+    eula = true;
+    dataDir = "/var/servers/minecraft";
+    allowDuplicatePorts = true;
+    servers = {
+      survival = {
+        bore = {
+          enable = true;
+          address = "mc.myserver.net";
+          secret = "totally-secure-secret";
+          proxy-port = 6969;
+          local-port = 6969;
+          rcon-port = 6968;
+        };
+        enable = true;
+        package = pkgs.fabricServers.fabric-1_18_2;
+      };
+    };
+  };
 }
 ```

@@ -7,6 +7,6 @@
   };
 
   outputs = _: {
-    nixosModules.minecraft-servers = ./module.nix;
+    nixosModules.minecraft-servers = ./modules;
   };
 }

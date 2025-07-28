@@ -19,8 +19,8 @@ in {
       };
 
       secret = mkOption {
-        type = types.str;
-        default = "";
+        type = types.nullOr types.str;
+        default = null;
         description = ''
           Bore server secret used to authenticate tunnel connections.
           Omit if no secret is required.
@@ -28,8 +28,8 @@ in {
       };
 
       proxy-port = mkOption {
-        type = types.int;
-        default = 25565;
+        type = types.nullOr types.int;
+        default = null;
         description = ''
           The port to open on the proxy server.
           When connecting to the server, player will supply this port.

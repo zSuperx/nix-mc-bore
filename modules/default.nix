@@ -2,7 +2,6 @@
   lib,
   pkgs,
   config,
-  inputs,
   ...
 }: let
   inherit (lib) mkOption mkIf types;
@@ -29,13 +28,22 @@ in {
 
   config = let
     extractLocalPorts = servers: lib.flatten (lib.mapAttrsToList (_: value: builtins.attrValues (lib.getAttrs ["local-port" "rcon-port"] value.bore)) servers);
+    extractBorePorts = servers: lib.flatten (lib.mapAttrsToList (_: value: "value.bore.address ${toString value.bore.proxy-port}") servers);
     enabledServers = lib.filterAttrs (_: v: v.enable && v.bore.enable) cfg.servers;
   in {
     assertions = [
       {
+        assertion = cfg.allowDuplicatePorts || lib.allUnique (extractBorePorts enabledServers);
+        message = ''
+          nix-mc-bore: Detected duplicate values for bore ports in services.minecraft-servers.servers
+          Ensure port types are unique across servers! To turn off this assertion,
+          set `services.minecraft-servers.allowDuplicatePorts = true;`.
+        '';
+      }
+      {
         assertion = cfg.allowDuplicatePorts || lib.allUnique (extractLocalPorts enabledServers);
         message = ''
-          nix-mc-bore: Detected duplicate values for ports in services.minecraft-servers.servers
+          nix-mc-bore: Detected duplicate values for local/rcon ports in services.minecraft-servers.servers
           Ensure port types are unique across servers! To turn off this assertion,
           set `services.minecraft-servers.allowDuplicatePorts = true;`.
         '';
@@ -43,7 +51,13 @@ in {
     ];
     systemd.services =
       lib.mapAttrs' (name: value: let
-        startScript = with value.bore; "${lib.getExe pkgs.bore-cli} local --to ${address} ${toString local-port} --port ${toString proxy-port} ${lib.optionalString (secret != "") "--secret ${secret}"}";
+        startScript = with value.bore; ''
+          ${lib.getExe pkgs.bore-cli} local \
+          ${toString local-port} \
+          --to ${address} \
+          ${lib.optionalString (proxy-port != null) "--port ${toString proxy-port}"} \
+          ${lib.optionalString (secret != null) "--secret ${secret}"} \
+        '';
       in {
         name = "minecraft-server-${name}-bore";
         value = {
