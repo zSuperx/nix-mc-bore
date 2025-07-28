@@ -1,7 +1,8 @@
 {
-  config,
   lib,
   pkgs,
+  config,
+  inputs,
   ...
 }: let
   inherit (lib) mkOption mkIf types;

@@ -1,9 +1,17 @@
 {
-  description = "Nix module for Minecraft + Bore TCP tunnel integration";
+  description = "A very basic flake";
 
-  inputs.nixpkgs.url = "github:NixOS/nixpkgs/nixos-unstable";
+  inputs = {
+    nixpkgs.url = "github:nixos/nixpkgs?ref=nixos-unstable";
+    nix-minecraft.url = "github:Infinidoge/nix-minecraft";
+  };
 
-  outputs = _: {
-    nixosModules.nix-minecraft-bore = ./module.nix;
+  outputs = inputs: {
+    nixosModules.minecraft-servers = {
+      imports = [
+        inputs.nix-minecraft.nixosModules.minecraft-servers
+        ./module
+      ];
+    };
   };
 }
