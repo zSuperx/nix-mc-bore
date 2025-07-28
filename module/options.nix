@@ -12,7 +12,7 @@ in {
     };
 
     proxy-secret = mkOption {
-      type = types.str;
+      type = types.nullOr types.str;
       description = "Bore server secret used to authenticate tunnel connections.";
     };
 

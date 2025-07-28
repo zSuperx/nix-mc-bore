@@ -5,7 +5,7 @@
   inputs,
   ...
 }: let
-  inherit (lib) mkOption mkIf types;
+  inherit (lib) mkOption types;
   cfg = config.services.minecraft-servers;
   containsDuplicateAttrValue = attrSet: name:
     !(
@@ -34,7 +34,7 @@
       wantedBy = ["multi-user.target"];
 
       serviceConfig = {
-        ExecStart = with value; "${lib.getExe pkgs.bore-cli} local --to ${proxy-addr} ${toString local-port} --port ${toString proxy-port} --secret ${proxy-secret}";
+        ExecStart = with value; "${lib.getExe pkgs.bore-cli} local --to ${proxy-addr} ${toString local-port} --port ${toString proxy-port} ${lib.optionalString (proxy-secret != null) "--secret ${proxy-secret}"}";
         Restart = "on-failure";
         RestartSec = 10;
       };
@@ -50,7 +50,10 @@ in {
     };
   };
 
-  config = {
-    systemd.services = buildBoreService cfg.servers;
-  };
+  config =
+    if containsDuplicateAttrValue cfg.servers "rcon-port"
+    then duplicateErrorMessage
+    else {
+      systemd.services = buildBoreService cfg.servers;
+    };
 }
