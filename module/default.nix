@@ -7,13 +7,6 @@
 }: let
   inherit (lib) mkOption types;
   cfg = config.services.minecraft-servers;
-  containsDuplicateAttrValue = attrSet: name:
-    !(
-      lib.allUnique
-      (builtins.map (lib.getAttr name) (lib.collect (x: x ? ${name}) attrSet))
-    );
-  duplicateErrorMessage = name: "Detected duplicate values for ${name} in config.mc-servers. Ensure port types are unique across servers!";
-
   buildBoreService = lib.mapAttrs' (name: value: {
     name = "minecraft-server-${name}-bore";
     value = {
@@ -51,12 +44,14 @@ in {
   };
 
   config = {
-    assertions = [
-      {
-        assertion = containsDuplicateAttrValue cfg.servers "rcon-port";
-        message = duplicateErrorMessage "rcon-port";
+    assertions = builtins.map (
+      port: {
+        assertion =
+          lib.allUnique
+          (builtins.map (lib.getAttr port) (builtins.attrValues cfg.servers));
+        message = "Detected duplicate values for ${port} in config.mc-servers. Ensure port types are unique across servers!";
       }
-    ];
+    ) ["rcon-port" "local-port" "proxy-port"];
     systemd.services = buildBoreService cfg.servers;
   };
 }
