@@ -6,12 +6,7 @@
     nix-minecraft.url = "github:Infinidoge/nix-minecraft";
   };
 
-  outputs = inputs: {
-    nixosModules.minecraft-servers = {
-      imports = [
-        inputs.nix-minecraft.nixosModules.minecraft-servers
-        ./module
-      ];
-    };
+  outputs = _: {
+    nixosModules.minecraft-servers = ./module.nix;
   };
 }

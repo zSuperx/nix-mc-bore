@@ -3,64 +3,69 @@
   config,
   ...
 }: let
-  inherit (lib) mkOption types;
+  inherit (lib) mkOption mkEnableOption types;
 in {
   options = {
-    proxy-addr = mkOption {
-      type = types.str;
-      description = "Address of proxy server, which forwards all ingress traffic to local server.";
-    };
+    bore = {
+      enable = mkEnableOption "bore proxy integration";
 
-    proxy-secret = mkOption {
-      type = types.nullOr types.str;
-      description = "Bore server secret used to authenticate tunnel connections.";
-    };
+      address = mkOption {
+        type = types.str;
+        default = "bore.pub";
+        description = ''
+          Address of proxy server running `bore server`,
+          which forwards all ingress traffic to local server running `bore local`.
+        '';
+      };
 
-    proxy-port = mkOption {
-      type = types.int;
-      default = 25565;
-      description = ''
-        The port to open on the proxy server.
-        When connecting to the server, users will supply this port.
-        If the port is 25565, it can be omitted by the user.
-      '';
-    };
+      secret = mkOption {
+        type = types.str;
+        default = "";
+        description = ''
+          Bore server secret used to authenticate tunnel connections.
+          Omit if no secret is required.
+        '';
+      };
 
-    local-port = mkOption {
-      type = types.int;
-      default = 25565;
-      description = ''
-        The port used locally to run the server on localhost. This is not exposed to the user
-        and is instead only used internally via the bore tunneling service.
-      '';
-    };
+      proxy-port = mkOption {
+        type = types.int;
+        default = 25565;
+        description = ''
+          The port to open on the proxy server.
+          When connecting to the server, player will supply this port.
+          If the port is 25565, it can be omitted by the player.
+          (e.g. `mc.myserver.com:25565` == `mc.myserver.com`)
+        '';
+      };
 
-    rcon-port = mkOption {
-      type = types.int;
-      default = 25575;
-      description = ''
-        The port to use to connect to RCON via localhost.
-        This is not and SHOULD not be exposed to the user/public internet.
-        Only connect to this by logging onto the server computer and then running RCON on localhost.
-      '';
-    };
+      local-port = mkOption {
+        type = types.int;
+        default = 25565;
+        description = ''
+          The port used locally to run the server on localhost. This is not exposed to the user
+          and is instead only used internally via the bore tunneling service.
+        '';
+      };
 
-    rcon-password = mkOption {
-      type = types.str;
-      default = "consolepass";
-      description = ''
-        The password used to log into the server RCON.
-      '';
+      rcon-port = mkOption {
+        type = types.int;
+        default = 25575;
+        description = ''
+          The port to use to connect to RCON via localhost.
+          This is not and SHOULD not be exposed to the user/public internet.
+          Only connect to this by logging onto the server computer and then running RCON on localhost.
+
+          (This option simply sets serverProperties."rcon.port".
+          It is included in this module for type checking reasons.)
+        '';
+      };
     };
   };
 
   config = {
     serverProperties = {
-      server-port = config.local-port;
-      enable-rcon = true;
-
-      "rcon.port" = config.rcon-port;
-      "rcon.password" = config.rcon-password;
+      server-port = config.bore.local-port;
+      "rcon.port" = lib.mkForce config.bore.rcon-port;
     };
   };
 }
