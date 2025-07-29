@@ -87,7 +87,7 @@ systemd service for `bore local` alongside the minecraft server.
 }
 ```
 
-(The default proxy address is [bore.pub], a publicly hosted server by the
+(The default proxy address is [bore.pub](bore.pub), a publicly hosted server by the
 author of bore. Go show them your support!)
 
 ## Troubleshooting
