@@ -14,6 +14,11 @@ in {
         type = types.attrsOf (types.submodule {
           imports = [./options.nix];
         });
+        default = {};
+        description = ''
+          Attribute set defining each server. Each field corresponds to
+          a minecraft server and systemd service.
+        '';
       };
 
       allowDuplicatePorts = mkOption {

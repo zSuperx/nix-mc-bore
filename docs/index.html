@@ -1,0 +1,291 @@
+<!doctype html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>nix-mc-bore - Options</title>
+    <script>
+      // Apply sidebar state immediately to prevent flash
+      (function () {
+        if (localStorage.getItem("sidebar-collapsed") === "true") {
+          document.documentElement.classList.add("sidebar-collapsed");
+        }
+      })();
+    </script>
+    <link rel="stylesheet" href="assets/style.css" />
+    <script defer src="assets/main.js"></script>
+    
+    <script defer src="assets/search.js"></script>
+    
+  </head>
+  <body>
+    <div class="container">
+      <header>
+        <div class="header-left">
+          <h1 class="site-title"><a href="index.html">nix-mc-bore</a></h1>
+        </div>
+        <nav class="header-nav">
+          <ul>
+            <li class="active"><a href="options.html">Options</a></li>
+            
+            <li><a href="search.html">Search</a></li>
+            
+          </ul>
+        </nav>
+        
+        <div class="search-container">
+          <input type="text" id="search-input" placeholder="Search..." />
+          <div id="search-results" class="search-results"></div>
+        </div>
+        
+      </header>
+
+      <div class="layout">
+        <div class="sidebar-toggle" aria-label="Toggle sidebar">
+          <svg
+            xmlns="http://www.w3.org/2000/svg"
+            viewBox="0 0 24 24"
+            width="24"
+            height="24"
+          >
+            <path d="M15.41 7.41L14 6l-6 6 6 6 1.41-1.41L10.83 12z"></path>
+          </svg>
+        </div>
+        <nav id="sidebar" class="sidebar">
+          <div class="docs-nav">
+            <h2>Documents</h2>
+            <ul>
+              <li><a href="options.html">Module Options</a></li>
+<li><a href="search.html">Search</a></li>
+
+            </ul>
+          </div>
+
+          <div class="toc">
+            <h2>Contents</h2>
+            <ul class="toc-list">
+  
+  
+
+  
+  
+  <li>
+    <details class="toc-category">
+      <summary title="">
+        <span></span>
+        <span class="toc-count">8</span>
+      </summary>
+      <ul>
+        
+
+        
+        <li>
+          <a href='#option-services-minecraft-servers-allowDuplicatePorts' title="services.minecraft-servers.allowDuplicatePorts">
+            services.minecraft-servers.allowDuplicatePorts
+            
+            
+          </a>
+        </li>
+        
+        <li>
+          <a href='#option-services-minecraft-servers-servers' title="services.minecraft-servers.servers">
+            services.minecraft-servers.servers
+            
+            
+          </a>
+        </li>
+        
+        <li>
+          <a href='#option-services-minecraft-servers-servers-&lt;name&gt;-bore-address' title="services.minecraft-servers.servers.&lt;name&gt;.bore.address">
+            services.minecraft-servers.servers.&lt;name&gt;.bore.address
+            
+            
+          </a>
+        </li>
+        
+        <li>
+          <a href='#option-services-minecraft-servers-servers-&lt;name&gt;-bore-enable' title="services.minecraft-servers.servers.&lt;name&gt;.bore.enable">
+            services.minecraft-servers.servers.&lt;name&gt;.bore.enable
+            
+            
+          </a>
+        </li>
+        
+        <li>
+          <a href='#option-services-minecraft-servers-servers-&lt;name&gt;-bore-local-port' title="services.minecraft-servers.servers.&lt;name&gt;.bore.local-port">
+            services.minecraft-servers.servers.&lt;name&gt;.bore.local-port
+            
+            
+          </a>
+        </li>
+        
+        <li>
+          <a href='#option-services-minecraft-servers-servers-&lt;name&gt;-bore-proxy-port' title="services.minecraft-servers.servers.&lt;name&gt;.bore.proxy-port">
+            services.minecraft-servers.servers.&lt;name&gt;.bore.proxy-port
+            
+            
+          </a>
+        </li>
+        
+        <li>
+          <a href='#option-services-minecraft-servers-servers-&lt;name&gt;-bore-rcon-port' title="services.minecraft-servers.servers.&lt;name&gt;.bore.rcon-port">
+            services.minecraft-servers.servers.&lt;name&gt;.bore.rcon-port
+            
+            
+          </a>
+        </li>
+        
+        <li>
+          <a href='#option-services-minecraft-servers-servers-&lt;name&gt;-bore-secret' title="services.minecraft-servers.servers.&lt;name&gt;.bore.secret">
+            services.minecraft-servers.servers.&lt;name&gt;.bore.secret
+            
+            
+          </a>
+        </li>
+        
+      </ul>
+    </details>
+  </li>
+  
+</ul>
+
+          </div>
+        </nav>
+
+        <main class="content">
+          <h1>nix-mc-bore Options</h1>
+
+          
+          <div class="search-form">
+            <input
+              type="text"
+              id="options-filter"
+              placeholder="Filter options..."
+            />
+          </div>
+          
+
+          <div class="options-container"><div class="option" id="option-services-minecraft-servers-allowDuplicatePorts">
+  <h3 class="option-name">
+    <a href="#option-services-minecraft-servers-allowDuplicatePorts" class="option-anchor">services.minecraft-servers.allowDuplicatePorts</a>
+    <span class="copy-link" title="Copy link to this option"></span>
+    <span class="copy-feedback">Link copied!</span>
+  </h3>
+  <div class="option-type">Type: <code>boolean</code></div>
+  <div class="option-description"><p>Set to true to remove the assertions on duplicate ports across servers.</p>
+</div>
+  <div class="option-default">Default: <code>false</code></div>
+  <div class="option-declared">Declared in: <code><a href="https://github.com/zSuperx/nix-mc-bore/modules" target="_blank">modules</a></code></div>
+</div>
+<div class="option" id="option-services-minecraft-servers-servers">
+  <h3 class="option-name">
+    <a href="#option-services-minecraft-servers-servers" class="option-anchor">services.minecraft-servers.servers</a>
+    <span class="copy-link" title="Copy link to this option"></span>
+    <span class="copy-feedback">Link copied!</span>
+  </h3>
+  <div class="option-type">Type: <code>attribute set of (submodule)</code></div>
+  <div class="option-description"><p>Attribute set defining each server. Each field corresponds to
+a minecraft server and systemd service.</p>
+</div>
+  <div class="option-default">Default: <code>{ }</code></div>
+  <div class="option-declared">Declared in: <code><a href="https://github.com/zSuperx/nix-mc-bore/modules" target="_blank">modules</a></code></div>
+</div>
+<div class="option" id="option-services-minecraft-servers-servers-&lt;name&gt;-bore-address">
+  <h3 class="option-name">
+    <a href="#option-services-minecraft-servers-servers-&lt;name&gt;-bore-address" class="option-anchor">services.minecraft-servers.servers.&lt;name&gt;.bore.address</a>
+    <span class="copy-link" title="Copy link to this option"></span>
+    <span class="copy-feedback">Link copied!</span>
+  </h3>
+  <div class="option-type">Type: <code>string</code></div>
+  <div class="option-description"><p>Address of proxy server running <code>bore server</code>,
+which forwards all ingress traffic to local server running <code>bore local</code>.</p>
+</div>
+  <div class="option-default">Default: <code>"bore.pub"</code></div>
+  <div class="option-declared">Declared in: <code><a href="https://github.com/zSuperx/nix-mc-bore/modules/options.nix" target="_blank">modules/options.nix</a></code></div>
+</div>
+<div class="option" id="option-services-minecraft-servers-servers-&lt;name&gt;-bore-enable">
+  <h3 class="option-name">
+    <a href="#option-services-minecraft-servers-servers-&lt;name&gt;-bore-enable" class="option-anchor">services.minecraft-servers.servers.&lt;name&gt;.bore.enable</a>
+    <span class="copy-link" title="Copy link to this option"></span>
+    <span class="copy-feedback">Link copied!</span>
+  </h3>
+  <div class="option-type">Type: <code>boolean</code></div>
+  <div class="option-description"><p>Whether to enable bore proxy integration.</p>
+</div>
+  <div class="option-default">Default: <code>false</code></div>
+  <div class="option-example">Example: <code>true</code></div>
+  <div class="option-declared">Declared in: <code><a href="https://github.com/zSuperx/nix-mc-bore/modules/options.nix" target="_blank">modules/options.nix</a></code></div>
+</div>
+<div class="option" id="option-services-minecraft-servers-servers-&lt;name&gt;-bore-local-port">
+  <h3 class="option-name">
+    <a href="#option-services-minecraft-servers-servers-&lt;name&gt;-bore-local-port" class="option-anchor">services.minecraft-servers.servers.&lt;name&gt;.bore.local-port</a>
+    <span class="copy-link" title="Copy link to this option"></span>
+    <span class="copy-feedback">Link copied!</span>
+  </h3>
+  <div class="option-type">Type: <code>signed integer</code></div>
+  <div class="option-description"><p>The port used locally to run the server on localhost. This is not exposed to the user
+and is instead only used internally via the bore tunneling service.</p>
+</div>
+  <div class="option-default">Default: <code>25565</code></div>
+  <div class="option-declared">Declared in: <code><a href="https://github.com/zSuperx/nix-mc-bore/modules/options.nix" target="_blank">modules/options.nix</a></code></div>
+</div>
+<div class="option" id="option-services-minecraft-servers-servers-&lt;name&gt;-bore-proxy-port">
+  <h3 class="option-name">
+    <a href="#option-services-minecraft-servers-servers-&lt;name&gt;-bore-proxy-port" class="option-anchor">services.minecraft-servers.servers.&lt;name&gt;.bore.proxy-port</a>
+    <span class="copy-link" title="Copy link to this option"></span>
+    <span class="copy-feedback">Link copied!</span>
+  </h3>
+  <div class="option-type">Type: <code>null or signed integer</code></div>
+  <div class="option-description"><p>The port to open on the proxy server.
+When connecting to the server, player will supply this port.
+If the port is 25565, it can be omitted by the player.
+(e.g. <code>mc.myserver.com:25565</code> == <a href="options.html#option-mc-myserver-com" class="option-reference"><code>mc.myserver.com</code></a>)</p>
+</div>
+  <div class="option-default">Default: <code>null</code></div>
+  <div class="option-declared">Declared in: <code><a href="https://github.com/zSuperx/nix-mc-bore/modules/options.nix" target="_blank">modules/options.nix</a></code></div>
+</div>
+<div class="option" id="option-services-minecraft-servers-servers-&lt;name&gt;-bore-rcon-port">
+  <h3 class="option-name">
+    <a href="#option-services-minecraft-servers-servers-&lt;name&gt;-bore-rcon-port" class="option-anchor">services.minecraft-servers.servers.&lt;name&gt;.bore.rcon-port</a>
+    <span class="copy-link" title="Copy link to this option"></span>
+    <span class="copy-feedback">Link copied!</span>
+  </h3>
+  <div class="option-type">Type: <code>null or signed integer</code></div>
+  <div class="option-description"><p>The port to use to connect to RCON via localhost.
+This is not and SHOULD not be exposed to the user/public internet.
+Only connect to this by logging onto the server computer and then running RCON on localhost.</p>
+<p>(This option simply sets serverProperties."rcon.port".
+It is included in this module for type checking reasons.)</p>
+</div>
+  <div class="option-default">Default: <code>null</code></div>
+  <div class="option-declared">Declared in: <code><a href="https://github.com/zSuperx/nix-mc-bore/modules/options.nix" target="_blank">modules/options.nix</a></code></div>
+</div>
+<div class="option" id="option-services-minecraft-servers-servers-&lt;name&gt;-bore-secret">
+  <h3 class="option-name">
+    <a href="#option-services-minecraft-servers-servers-&lt;name&gt;-bore-secret" class="option-anchor">services.minecraft-servers.servers.&lt;name&gt;.bore.secret</a>
+    <span class="copy-link" title="Copy link to this option"></span>
+    <span class="copy-feedback">Link copied!</span>
+  </h3>
+  <div class="option-type">Type: <code>null or string</code></div>
+  <div class="option-description"><p>Bore server secret used to authenticate tunnel connections.
+Omit if no secret is required.</p>
+</div>
+  <div class="option-default">Default: <code>null</code></div>
+  <div class="option-declared">Declared in: <code><a href="https://github.com/zSuperx/nix-mc-bore/modules/options.nix" target="_blank">modules/options.nix</a></code></div>
+</div>
+</div>
+
+          <div class="footnotes-container">
+            <!-- Footnotes will be appended here -->
+          </div>
+        </main>
+      </div>
+
+      <footer>
+        <p></p>
+      </footer>
+    </div>
+
+    
+  </body>
+</html>
