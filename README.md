@@ -26,13 +26,13 @@ First add it to your flake inputs:
 
 ```nix
 {
-    inputs = {
-        nix-mc-bore.url = "github:zSuperx/nix-mc-bore";
-    };
+  inputs = {
+    nix-mc-bore.url = "github:zSuperx/nix-mc-bore";
+  };
 
-    outputs = inputs @ { self, ... }: {
-        # ...
-    };
+  outputs = inputs @ { self, ... }: {
+    # ...
+  };
 }
 ```
 
@@ -58,7 +58,6 @@ systemd service for `bore local` alongside the minecraft server.
     enable = true;
     eula = true;
     dataDir = "/var/servers/minecraft";
-    allowDuplicatePorts = true;
     servers = {
       survival = {
         enable = true;
@@ -78,8 +77,6 @@ systemd service for `bore local` alongside the minecraft server.
         package = pkgs.fabricServers.fabric-1_18_2;
         bore = {
           enable = true;
-          address = "mc.myserver.net";
-          secret = "totally-secure-secret";
           proxy-port = 69420;
           local-port = 25565;
           rcon-port = 25575;
@@ -89,6 +86,9 @@ systemd service for `bore local` alongside the minecraft server.
   };
 }
 ```
+
+(The default proxy address is "bore.pub", a publicly hosted server by the
+author of bore. Go show them your support!)
 
 ## Troubleshooting
 
