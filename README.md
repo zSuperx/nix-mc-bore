@@ -19,6 +19,8 @@ Read more about each of them here:
 
 ## Usage
 
+To see a full set of configuration options, check out the [docs](https://piyush.ai/nix-mc-bore/).
+
 This module is intended to be used alongside `nix-minecraft`'s
 `minecraft-servers` module.
 
