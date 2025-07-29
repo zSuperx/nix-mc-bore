@@ -11,8 +11,10 @@
     system = "x86_64-linux";
     pkgs = import inputs.nixpkgs {inherit system;};
   in {
+    # NixOS module
     nixosModules.minecraft-servers = ./modules;
 
+    # Doc generation
     packages.${system}.docs = pkgs.callPackage inputs.unf.lib.pak-chooie {
       inherit self;
       projectName = "nix-mc-bore";
