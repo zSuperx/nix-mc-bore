@@ -48,8 +48,8 @@ in {
       };
 
       rcon-port = mkOption {
-        type = types.int;
-        default = 25575;
+        type = types.nullOr types.int;
+        default = null;
         description = ''
           The port to use to connect to RCON via localhost.
           This is not and SHOULD not be exposed to the user/public internet.
@@ -63,9 +63,17 @@ in {
   };
 
   config = {
-    serverProperties = {
-      server-port = config.bore.local-port;
-      "rcon.port" = lib.mkForce config.bore.rcon-port;
-    };
+    serverProperties =
+      {
+        server-port = config.bore.local-port;
+      }
+      // (
+        if config.bore.rcon-port != null
+        then {
+          enable-rcon = lib.mkForce true;
+          "rcon.port" = lib.mkForce config.bore.rcon-port;
+        }
+        else {}
+      );
   };
 }

@@ -1,17 +1,29 @@
 # nix-mc-bore
 
+<!--toc:start-->
+- [nix-mc-bore](#nix-mc-bore)
+  - [About](#about)
+  - [Usage](#usage)
+  - [Troubleshooting](#troubleshooting)
+<!--toc:end-->
+
+## About
+
 This is a simple NixOS module that extends the `nix-minecraft` NixOS module
 with options to integrate with the `bore` TCP tunneling program.
 
 Read more about each of them here:
+
 - [nix-minecraft](https://github.com/Infinidoge/nix-minecraft)
 - [bore](https://github.com/ekzhang/bore)
 
 ## Usage
 
-This module is intended to be used alongside `nix-minecraft`'s `minecraft-servers` module.
+This module is intended to be used alongside `nix-minecraft`'s
+`minecraft-servers` module.
 
 First add it to your flake inputs:
+
 ```nix
 {
     inputs = {
@@ -25,7 +37,7 @@ First add it to your flake inputs:
 ```
 
 Then in your `configuration.nix` or adjacent, add the usual imports for `nix-minecraft`,
-along with `nix-mc-bore`. Then you can configure servers to automatically start a
+along with `nix-mc-bore`. You can then configure NixOS to automatically start a
 systemd service for `bore local` alongside the minecraft server.
 
 ```nix
@@ -49,6 +61,8 @@ systemd service for `bore local` alongside the minecraft server.
     allowDuplicatePorts = true;
     servers = {
       survival = {
+        enable = true;
+        package = pkgs.fabricServers.fabric-1_18_2;
         bore = {
           enable = true;
           address = "mc.myserver.net";
@@ -57,10 +71,65 @@ systemd service for `bore local` alongside the minecraft server.
           local-port = 6969;
           rcon-port = 6968;
         };
+      };
+
+      creative = {
         enable = true;
         package = pkgs.fabricServers.fabric-1_18_2;
+        bore = {
+          enable = true;
+          address = "mc.myserver.net";
+          secret = "totally-secure-secret";
+          proxy-port = 69420;
+          local-port = 25565;
+          rcon-port = 25575;
+        };
       };
     };
   };
 }
 ```
+
+## Troubleshooting
+
+`nix-minecraft` creates systemd services named `"minecraft-server-<name>"`,
+where `<name>` is the attribute name within
+`services.minecraft-servers.servers`.
+
+`nix-mc-bore` follows this convention, and simply appends `"-bore"` to the end,
+creating services only when enabled. As a result, the following
+configuration...
+
+```nix
+{
+  services.minecraft-servers.servers = {
+    survival = {
+      enable = true;
+      bore.enable = true;
+    };
+
+    creative = {
+      enable = true;
+      bore.enable = false;
+    };
+  };
+}
+```
+
+...results in the following systemd services:
+
+- `"minecraft-server-survival"`
+- `"minecraft-server-survival-bore"`
+- `"minecraft-server-creative"`
+
+These can all be started and stopped with `systemctl [start|stop]
+<service-name>`, and their logs can be observed with `journalctl -u
+<service-name>`.
+
+Additionally, `nix-mc-bore` will run some basic port exclusivity assertions at
+build time, warning you about any duplicate local ports (server & rcon ports)
+as well as duplicate bore server address/port tuples.
+
+To disable these assertions, set
+`services.minecraft-servers.allowDuplicatePorts = true`, but beware that the
+bore services may silently fail.
