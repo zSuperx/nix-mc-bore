@@ -3,7 +3,6 @@
 
   inputs = {
     nixpkgs.url = "github:nixos/nixpkgs?ref=nixos-unstable";
-    nix-minecraft.url = "github:Infinidoge/nix-minecraft";
     unf.url = "git+https://git.atagen.co/atagen/unf";
   };
 
@@ -17,7 +16,9 @@
       inherit self;
       projectName = "nix-mc-bore";
       newPath = "https://github.com/zSuperx/nix-mc-bore";
-      modules = [./modules];
+      modules = [
+        ./modules
+      ];
     };
   };
 }
