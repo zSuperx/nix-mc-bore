@@ -12,13 +12,16 @@
   in {
     nixosModules.minecraft-servers = ./modules;
 
-    packages.${system}.docs = pkgs.callPackage inputs.unf.lib.pak-chooie {
-      inherit self;
+    packages.${system}.docs = inputs.unf.lib.html {
+      inherit self pkgs;
       projectName = "nix-mc-bore";
       newPath = "https://github.com/zSuperx/nix-mc-bore";
       modules = [
         ./modules
       ];
+      userOpts = {
+        warningsAreErrors = false;
+      };
     };
   };
 }

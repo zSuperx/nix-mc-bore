@@ -128,11 +128,11 @@
         "nixpkgs": "nixpkgs_3"
       },
       "locked": {
-        "lastModified": 1748163740,
-        "narHash": "sha256-WOK9w5gtdpy4RefaiRtr6YqFaPxR0OrmI2PleZnn4O4=",
+        "lastModified": 1753857732,
+        "narHash": "sha256-DfyQvv98SbnjM6zRF/N04MD08wr41O+oBq8Vm4SjEwM=",
         "ref": "refs/heads/main",
-        "rev": "4d711e5002bd22adbe6d786560be0fde6cbcf81e",
-        "revCount": 1,
+        "rev": "29dbb12ea573753dab4f03890e33b137284a911e",
+        "revCount": 3,
         "type": "git",
         "url": "https://git.atagen.co/atagen/unf"
       },
