@@ -1,5 +1,7 @@
 # nix-mc-bore
 
+**This repository is now archived and deprecated. This [alternative](https://github.com/zSuperx/nix-bore) exposes Bore as a standalone NixOS service and contains examples on how to merge it with `nix-minecraft`**.
+
 <!--toc:start-->
 - [nix-mc-bore](#nix-mc-bore)
   - [About](#about)
